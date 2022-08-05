@@ -32,4 +32,10 @@ jobs:
       - name: Publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/webapp
         
-        
+      - name: Upload build artifact for deployment job
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          # Artifact name
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/webapp
+          if-no-files-found: error
