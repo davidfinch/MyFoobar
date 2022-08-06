@@ -39,3 +39,27 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/webapp
           if-no-files-found: error
+          
+deploy: 
+    needs: build 
+    runs-on: windows-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Download the build artifact from Build job
+      uses: actions/download-artifact@v2.0.8
+      with:
+          name: .net-app
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'myfoobar'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DEBD68DAB9514F148A3CF471EA3C9657 }}
+        package: .
+
+
