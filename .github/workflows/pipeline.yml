@@ -40,7 +40,7 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/webapp
           if-no-files-found: error
           
-deploy: 
+  deploy: 
     needs: build 
     runs-on: windows-latest
     environment:
