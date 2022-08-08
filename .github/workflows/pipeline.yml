@@ -7,6 +7,10 @@ on:
   push:
     branches: [ "main" ] 
 
+env:
+  app-name: "miofoobar"
+  rg-name: "app-foobar-prod-eastus"
+
 jobs:
   build:
     runs-on: windows-latest
@@ -40,11 +44,11 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/webapp
           if-no-files-found: error
           
-  deploy: 
+  deploy_staging: 
     needs: build 
     runs-on: windows-latest
     environment:
-      name: 'Production'
+      name: 'PRE-PROD'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -53,13 +57,19 @@ jobs:
       with:
           name: .net-app
 
+    - name: Login via Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'miofoobar'
-        slot-name: 'Production'
+        app-name: ${{ env.app-name }}
+        slot-name: 'staging'
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4667AAAB18B640208E9C54EA67F0903D }}
         package: .
 
-
+    - name: az cli logout
+      run: az logout
