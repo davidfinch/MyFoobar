@@ -57,9 +57,9 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'myfoobar'
+        app-name: 'miofoobar'
         slot-name: 'Production'
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DEBD68DAB9514F148A3CF471EA3C9657 }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4667AAAB18B640208E9C54EA67F0903D }}
         package: .
 
 
