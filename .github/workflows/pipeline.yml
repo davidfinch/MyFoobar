@@ -44,11 +44,11 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/webapp
           if-no-files-found: error
           
-  deploy_staging: 
+  deploy: 
     needs: build 
     runs-on: windows-latest
     environment:
-      name: 'PRE-PROD'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -67,7 +67,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.app-name }}
-        slot-name: 'staging'
+        slot-name: 'Production'
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4667AAAB18B640208E9C54EA67F0903D }}
         package: .
 
