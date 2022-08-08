@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MyFoobar.Web\MyFoobar.Web.csproj" />
+    <ProjectReference Include="..\MyFoobar.Web\MyFoobar.Web.csproj" />
   </ItemGroup>
 
 </Project>
